@@ -1,0 +1,124 @@
+Coding Challenge
+
+
+There are two phases to the challenge, the first being an individual assignment, and the second being a team assignment.  Both phases are centered around building a project to solve a real world problem and displaying related data.
+
+
+The Problem:  A common problem within our industry is controlling the rate of speed at which a group of conveyors (or belts) will run to transport eggs for processing.  The eggs will be fairly randomly distributed along the conveyors, and the speed of the conveyors will need to be adjusted such that the eggs leaving the conveyor do so at a preselected rate.  With a major limit being the maximum capacity of the next conveyors the eggs are moving onto.
+
+
+You will be building a simulated version of this control, with output to show its performance.  We will supply a single sample data file containing amounts of eggs along the conveyor which will need to be indexed through as the virtual conveyor is run.  A single iteration through the entire file is the simulation of one entire “run” of a batch of eggs, or just a “run” for short.  At the start of the run the conveyor will begin at a given speed (expressed in percent), the system you build will need to calculate how much belt travel will occur in a 10-second period, read egg data from the file for that much more of the simulated conveyor, calculate the rate of eggs exiting the conveyor, and adjust the speed of the conveyor to try to maintain a desired rate of eggs.  Each 10 second read and subsequent speed adjustment opportunity is referred to as a “scan”.
+
+
+The system should allow the user to run and rerun as many simulations as desired, allowing them to alter the initial settings and see the results of the changes.
+
+Due to the random nature of the distribution of eggs, the actual achieved rate in any given scan will not be exactly on target, but the avg over a larger period of time should remain near the desired rate.  Similarly, making control decisions on the data of a single scan can yield somewhat random results.  It’s therefore helpful to calculate not just an instantaneous rate, but to analyze that rate’s change over larger time periods, a common way to accomplish that is through the use of mathematical filters.
+
+
+Phase 1:  Create and present a basic plan for the project with the goal of completing the task in 4 man-hours using 2 full-stack web developers.  The actual coding time will be broken up somewhat, details on that will be included in the Phase 2 documentation below.  
+
+
+The plan should include at least:
+
+-a basic layout for the User Interface 
+
+-a proposed application structure and flow
+
+-a breakdown of the work into subtasks
+
+-a rough outline of the proposed data structures
+
+-a list of primary variables or key metrics related to the control
+
+
+Phase 2:  Create a single working plan from the plans each of you have individually created, divide the work, and create the application.
+
+
+The actual coding time will be broken into 3 40-minute “sprints” of coding.  During the coding periods we’ll try to remain out of your way but you’ll have access to a single helper to act as a technical reference for questions/features related to replit.com.  There will be 10 minutes between each sprint where we will convene for a short retrospective of the last sprint and adapt the plan going into the next sprint.  
+
+
+The UI/Display should look finished and will need to:
+
+-Utilize Cascading Style Sheets (fixed, or using a framework)
+
+-Include an area for user entry before running, this will need to capture at least:
+
+        -The Target Rate to run the eggs, expressed in Egg Cases Per Hour
+
+-The Maximum Allowable Rate for the eggs, expressed in Egg Cases Per Hour
+
+-The Starting Belt Speed for the simulation
+
+        -The desired time period (in seconds or scans) for the average achieved output
+
+    -The file to be used to supply the eggs on the belt (with a pre-supplied default)
+
+    -Any inputs for tuning the implemented control algorithm
+
+-An area (or page) containing the results of the run, minimum results to display 
+
+-Average rate achieved for the entire length of the conveyor
+
+-A graph of the performance achieved compared to the setpoint over time throughout the run:
+
+  -the per-scan rate achieved for each scan 
+
+  -a user adjustable average across multiple scans 
+
+  -the Target CPH
+
+  -anything else you feel will help gauge and tune the performance.
+
+-the total realworld “time” taken to empty the conveyor
+
+-the amount of time the rate achieved was above the maximum allowable rate
+
+-the final throughput rate for the entire run
+
+ -anything else you feel will help gauge and tune the performance.
+
+
+    
+
+You should be prepared at the end to show the application in use and to demonstrate the settings which provide your best achieved control, and to see how that control performs against other sample data.
+
+    
+
+Notes:
+
+Case = 360 Eggs
+
+CPH = Cases per Hour
+
+Maximum Conveyor "Speed" (100%)= 100 inches per minute
+
+Minimum Conveyor "Speed"=(1%)= 10 inches per minute
+
+
+Two Examples of Mathematical Filters:
+
+Lag Filter: Output[0]=Value[0], Output[n]=(Output[n-1]*(K-1)+Value[n])/K (K is the filter time)
+
+Window filter: Output[n]=(Value[n-(k-1)]+...+Value[n])/k (where k is the least of K or n) (K is the filter time)
+
+
+
+
+Hints:
+
+A few Key Variables that need to be tracked throughout the execution:
+
+Setpoint (in CPH)
+
+Eggs per "scan"
+
+Total Eggs up to each "scan"
+
+Speed to run the "belt"
+
+Current time within the "run" (runtime)
+
+Flow rate (in CPH) (suggest some type of filter on this)
+
+Parameter setpoints for how the control operates
+
