@@ -9,7 +9,7 @@ cd Egg_Conveyor
 python main.py
 ```
 
-    - Ensure you have the "config.txt" and the "Example_Data.csv" files
+ *Ensure you have the "config.txt" and the "Example_Data.csv" files*
 
 ## Objective(s)
 - Read in data from a .csv file and run a conveyor-belt simulation based on the contents
