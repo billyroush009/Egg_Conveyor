@@ -1,6 +1,14 @@
 # PMSI Coding Challenge
 
 # To Run
+- Confirm you have Python and Git installed
+- Navigate to where you'd like to save the program in a git-friendly terminal (I used powershell)
+```
+git clone https://github.com/billyroush009/Egg_Conveyor.git
+cd Egg_Conveyor
+python main.py
+```
+
 - Ensure you have the "config.txt" and the "Example_Data.csv" files
 - Run "main.py"
 
