@@ -126,12 +126,14 @@ def main():
     #print(config_vars) #TEST OUTPUT, json config file into a dictionary
     #print(config_vars['start_speed'])
     #print(conveyor_speed_max)
+    print('Starting Params (in config file):')
+    print('Starting Speed: %d (inches/min) | Target Rate: %d (cases/hr) | Max Rate: %d (cases/hr) | Target Time: %d (seconds) | Debug Messages: %d' % (config_vars['start_speed'], config_vars['target_rate'], config_vars['max_rate'], config_vars['target_time'], config_vars['debug_output']))
 
     conveyor_speed_current = config_vars['start_speed'] # initializing 'current speed' to 'starting speed' specified in config file, in inches / min
     conveyor_speed_current = int(conveyor_speed_current / 6) # converting speed to inches per 10 seconds (scan-time)
 
     conveyor_rate_target = config_vars['target_rate'] #target rate (cases per hour) to strive for
-    print('Target Rate: %.2f (Cases / Hour)' % (conveyor_rate_target))
+    #print('Target Rate: %.2f (Cases / Hour)' % (conveyor_rate_target))
     
 
     csv_dict = {}
@@ -147,6 +149,7 @@ def main():
 
     throughput_sum = 0
 
+    print('\nStarting Run...')
     #START SCAN
     #'scan' until the next 'scan' would index beyond the upper limit of 'csv_dict'
     while((current_row_running + conveyor_speed_current) < (len(csv_dict))):
@@ -154,13 +157,13 @@ def main():
         results = scan(csv_dict, results, conveyor_speed_current, current_row_running)
         #print('Real Speed: %.2f | Target Speed: %.2f | Latest Scan Throughput: %.2f' % (conveyor_speed_current, conveyor_speed_target, results['last_scan_throughput']))
         throughput_sum += results['last_scan_throughput']
-
         # adjusting current speed based on throughput of last scan (speed up / down)
         conveyor_speed_current = adjust_speed(results['last_scan_throughput'], conveyor_rate_target, conveyor_speed_current)
 
 
+    print('Run complete!\nResults:')
     #output 'results' dict in meaningful ways (metrics)
-    print('\nScans: %d (%d seconds)' % (results['scan_count'], (results['scan_count']*10)))
+    print('Scans: %d (%d seconds)' % (results['scan_count'], (results['scan_count']*10)))
     #print('Sum of Speed(s): %d' % (results['conveyor_speed_sum']))
     print('Average Speed: %.2f inches per scan' % (((results['conveyor_speed_sum']) / results['scan_count'])))
     print('Total Eggs Counted: %d (%.2f Cases) ' % (results['egg_count_sum'], (results['egg_count_sum']/case)))
